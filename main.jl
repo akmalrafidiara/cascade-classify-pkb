@@ -70,13 +70,16 @@ function process_df(df, compare, indices)
     result_matrix = hcat(result_matrix, dft[:, 2])
   end
 
-  return result_matrix
+  return result_matrix, compare_current
 end
 
-result_matrix = process_df(df, compare, indices)
+result_matrix, compare = process_df(df, compare, indices)
 sorted_indices = sortperm(indices)
 result_matrix = result_matrix[:, sorted_indices]
 result_matrix = convert(Matrix{Float16}, result_matrix)
+
+println("\nWrong predictions with similarity to the original class 0:")
+display(compare)
 
 println("\nResult of Mu:")
 display(result_matrix)
